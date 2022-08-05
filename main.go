@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	cnv := canvas.NewCanvas(canvas.Point{X: 1, Y: 1}, canvas.Point{X: 10, Y: 10})
+	cnv := canvas.NewCanvas(canvas.Point{Line: 1, Column: 1}, canvas.Point{Line: 10, Column: 50})
 	cnv.DrawBoxWithTitle("Title")
 }
