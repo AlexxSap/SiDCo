@@ -27,12 +27,16 @@ const (
 	bottomLeftCorner  = "\u2514"
 	bottomRightCorner = "\u2518"
 
-//	clearAllScreen    = "\u001b[2J"
+	clearAllScreen = "\u001b[2J"
 )
 
-// func ClearScreen() {
-// 	fmt.Println(clearAllScreen)
-// }
+func clearScreen() {
+	fmt.Println(clearAllScreen)
+}
+
+func init() {
+	clearScreen()
+}
 
 // Point represents position in console
 type Point struct {
