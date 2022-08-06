@@ -6,16 +6,21 @@ import (
 	"unicode/utf8"
 )
 
+// Coord alias for coords type
+type pos uint8
+
+/// TODO move to utils file ?
 var (
-	maxLine int = 0
+	maxLine pos = 0
 )
 
-func saveMaxLine(line int) {
+func saveMaxLine(line pos) {
 	if maxLine < line {
 		maxLine = line
 	}
 }
 
+/// TODO move to other file
 // constants for comands
 const (
 	hLine = "\u2500"
@@ -40,8 +45,7 @@ func init() {
 
 // Point represents position in console
 type Point struct {
-	/// TODO change to uint8 or 16
-	Line, Column int
+	Line, Column pos
 }
 
 // Canvas is the canvas for drawing
@@ -94,7 +98,7 @@ func (cnv Canvas) DrawBoxWithTitle(title string) {
 		topLeftCorner +
 			strings.Repeat(hLine, 2) +
 			title +
-			strings.Repeat(hLine, int(cnv.size.Column-2-utf8.RuneCountInString(title))) +
+			strings.Repeat(hLine, int(cnv.size.Column)-2-utf8.RuneCountInString(title)) +
 			topRightCorner)
 
 	for line := cnv.start.Line + 1; line < cnv.start.Line+cnv.size.Line; line++ {
@@ -108,7 +112,7 @@ func (cnv Canvas) DrawBoxWithTitle(title string) {
 	cnv.moveCursorTo(Point{Line: cnv.start.Line + cnv.size.Line, Column: cnv.start.Column})
 	fmt.Print(
 		bottomLeftCorner +
-			strings.Repeat(hLine, cnv.size.Column) +
+			strings.Repeat(hLine, int(cnv.size.Column)) +
 			bottomRightCorner)
 
 	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
