@@ -55,13 +55,17 @@ type Canvas struct {
 }
 
 // NewCanvas create canvas with custom start point and size
-func NewCanvas(start, size Point) Canvas {
+func NewCanvas(start, size Point) (Canvas, error) {
 	/// TODO add size check
+
+	if size.Column == 0 || size.Line == 0 {
+		return Canvas{}, fmt.Errorf("invalid size")
+	}
 
 	saveMaxLine(start.Line + size.Line)
 	return Canvas{
 		start: start,
-		size:  size}
+		size:  size}, nil
 }
 
 // clear clear canvas
@@ -74,20 +78,18 @@ func (cnv Canvas) clear() {
 // 	/// TODO fill me
 // }
 
-// clearFullCurentLine will clear screen on current line
-// func (cnv Canvas) clearFullCurentLine() {
-// 	fmt.Println(erazer)
-// }
-
 // moveCursorTo moved cursor to custom position
 func (cnv Canvas) moveCursorTo(point Point) {
 	fmt.Printf(movePattern, point.Line, point.Column)
 }
 
 // DrawBoxWithTitle draw box around canvas with some title
-func (cnv Canvas) DrawBoxWithTitle(title string) {
+func (cnv Canvas) DrawBoxWithTitle(title string) error {
 
-	/// TODO add check to title's len
+	titleLen := utf8.RuneCountInString(title)
+	if titleLen > int(cnv.start.Column) {
+		return fmt.Errorf("length of title more then box width")
+	}
 
 	cnv.clear()
 
@@ -116,5 +118,7 @@ func (cnv Canvas) DrawBoxWithTitle(title string) {
 			bottomRightCorner)
 
 	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
+
+	return nil
 
 }
