@@ -68,9 +68,15 @@ func NewCanvas(start, size Point) (Canvas, error) {
 		size:  size}, nil
 }
 
-// clear clear canvas
-func (cnv Canvas) clear() {
-	/// TODO fill me
+/// TODO delete this
+func (cnv Canvas) DrawSample() {
+
+	for i := 1; i <= int(cnv.size.Column); i++ {
+		cnv.moveCursorTo(Point{Line: cnv.start.Line + 1, Column: cnv.start.Column + pos(i)})
+		fmt.Print("*")
+	}
+
+	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
 }
 
 // clearInner clear all in the box
@@ -87,11 +93,9 @@ func (cnv Canvas) moveCursorTo(point Point) {
 func (cnv Canvas) DrawBoxWithTitle(title string) error {
 
 	titleLen := utf8.RuneCountInString(title)
-	if titleLen > int(cnv.start.Column) {
+	if titleLen > int(cnv.size.Column) {
 		return fmt.Errorf("length of title more then box width")
 	}
-
-	cnv.clear()
 
 	cnv.moveCursorTo(cnv.start)
 
