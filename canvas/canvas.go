@@ -69,20 +69,29 @@ func NewCanvas(start, size Point) (Canvas, error) {
 }
 
 /// TODO delete this
-func (cnv Canvas) DrawSample() {
+func (cnv Canvas) DrawSample(t bool) {
 
-	for i := 1; i <= int(cnv.size.Column); i++ {
-		cnv.moveCursorTo(Point{Line: cnv.start.Line + 1, Column: cnv.start.Column + pos(i)})
-		fmt.Print("*")
+	cnv.clearInner()
+
+	if t == true {
+		for i := 1; i <= int(cnv.size.Column); i++ {
+			cnv.moveCursorTo(Point{Line: cnv.start.Line + 1, Column: cnv.start.Column + pos(i)})
+			fmt.Print("*")
+		}
+	} else {
+		for i := 1; i < int(cnv.size.Line); i++ {
+			cnv.moveCursorTo(Point{Line: cnv.start.Line + pos(i), Column: cnv.start.Column + 1})
+			fmt.Print("*")
+		}
 	}
 
 	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
 }
 
 // clearInner clear all in the box
-// func (cnv Canvas) clearInner() {
-// 	/// TODO fill me
-// }
+func (cnv Canvas) clearInner() {
+
+}
 
 // moveCursorTo moved cursor to custom position
 func (cnv Canvas) moveCursorTo(point Point) {
