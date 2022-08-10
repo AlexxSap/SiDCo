@@ -9,32 +9,31 @@ import (
 // Coord alias for coords type
 type pos uint8
 
-/// TODO move to utils file ?
 var (
+	// max line for move cursor after draw
 	maxLine pos = 0
 )
 
+// constants for comands
+const (
+	hLine             = "\u2500"
+	vLine             = "\u2502"
+	movePattern       = "\033[%v;%vf"
+	topLeftCorner     = "\u250C"
+	topRightCorner    = "\u2510"
+	bottomLeftCorner  = "\u2514"
+	bottomRightCorner = "\u2518"
+	clearAllScreen    = "\u001b[2J"
+)
+
+// saveMaxLine save maximum line number into 'maxLine'
 func saveMaxLine(line pos) {
 	if maxLine < line {
 		maxLine = line
 	}
 }
 
-/// TODO move to other file
-// constants for comands
-const (
-	hLine = "\u2500"
-	vLine = "\u2502"
-	//erazer            = "\033[H\033[2J"
-	movePattern       = "\033[%v;%vf"
-	topLeftCorner     = "\u250C"
-	topRightCorner    = "\u2510"
-	bottomLeftCorner  = "\u2514"
-	bottomRightCorner = "\u2518"
-
-	clearAllScreen = "\u001b[2J"
-)
-
+// clearScreen clear all terminal screen
 func clearScreen() {
 	fmt.Println(clearAllScreen)
 }
@@ -56,7 +55,6 @@ type Canvas struct {
 
 // NewCanvas create canvas with custom start point and size
 func NewCanvas(start, size Point) (Canvas, error) {
-	/// TODO add size check
 
 	if size.Column == 0 || size.Line == 0 {
 		return Canvas{}, fmt.Errorf("invalid size")
@@ -68,12 +66,12 @@ func NewCanvas(start, size Point) (Canvas, error) {
 		size:  size}, nil
 }
 
-/// TODO delete this
-func (cnv Canvas) DrawSample(t bool) {
+// DrawSample example for check this
+func (cnv Canvas) DrawSample(isHorizontal bool) {
 
 	cnv.clearInner()
 
-	if t == true {
+	if isHorizontal {
 		for i := 1; i <= int(cnv.size.Column); i++ {
 			cnv.moveCursorTo(Point{Line: cnv.start.Line + 1, Column: cnv.start.Column + pos(i)})
 			fmt.Print("*")
