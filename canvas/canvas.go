@@ -77,10 +77,14 @@ func (cnv Canvas) DrawSample(t bool) {
 		for i := 1; i <= int(cnv.size.Column); i++ {
 			cnv.moveCursorTo(Point{Line: cnv.start.Line + 1, Column: cnv.start.Column + pos(i)})
 			fmt.Print("*")
+			cnv.moveCursorTo(Point{Line: cnv.start.Line + cnv.size.Line - 1, Column: cnv.start.Column + pos(i)})
+			fmt.Print("*")
 		}
 	} else {
 		for i := 1; i < int(cnv.size.Line); i++ {
 			cnv.moveCursorTo(Point{Line: cnv.start.Line + pos(i), Column: cnv.start.Column + 1})
+			fmt.Print("*")
+			cnv.moveCursorTo(Point{Line: cnv.start.Line + pos(i), Column: cnv.start.Column + cnv.size.Column})
 			fmt.Print("*")
 		}
 	}
@@ -90,7 +94,12 @@ func (cnv Canvas) DrawSample(t bool) {
 
 // clearInner clear all in the box
 func (cnv Canvas) clearInner() {
-
+	var line pos = 1
+	for ; line < cnv.size.Line; line++ {
+		cnv.moveCursorTo(Point{Line: cnv.start.Line + line, Column: cnv.start.Column + 1})
+		fmt.Print(strings.Repeat(" ", int(cnv.size.Column)))
+	}
+	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
 }
 
 // moveCursorTo moved cursor to custom position
