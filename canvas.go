@@ -6,12 +6,9 @@ import (
 	"unicode/utf8"
 )
 
-// Coord alias for coords type
-type pos uint8
-
 var (
 	// max line for move cursor after draw
-	maxLine pos = 0
+	maxLine int = 0
 )
 
 // constants for comands
@@ -27,7 +24,7 @@ const (
 )
 
 // saveMaxLine save maximum line number into 'maxLine'
-func saveMaxLine(line pos) {
+func saveMaxLine(line int) {
 	if maxLine < line {
 		maxLine = line
 	}
@@ -44,7 +41,7 @@ func init() {
 
 // Point represents position in console
 type Point struct {
-	Line, Column pos
+	Line, Column int
 }
 
 // Canvas is the canvas for drawing
@@ -66,18 +63,29 @@ func NewCanvas(start, size Point) (Canvas, error) {
 		size:  size}, nil
 }
 
+// TopLeftCorner return top left corner pos
+func (cnv Canvas) TopLeftCorner() Point {
+	return cnv.start
+}
+
+// BottomRightCorner return bottom right corner pos
+func (cnv Canvas) BottomRightCorner() Point {
+	return Point{Line: cnv.start.Line + cnv.size.Line, Column: cnv.start.Column + cnv.size.Column}
+}
+
 // DrawPath draw symbol 'sym' in point 'points'
 func (cnv Canvas) DrawPath(sym string, points []Point) {
 	for _, p := range points {
 		cnv.moveCursorTo(p)
 		fmt.Print(sym)
 	}
+
+	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
 }
 
 // ClearInner clear all in the box
 func (cnv Canvas) ClearInner() {
-	var line pos = 1
-	for ; line < cnv.size.Line; line++ {
+	for line := 1; line < cnv.size.Line; line++ {
 		cnv.moveCursorTo(Point{Line: cnv.start.Line + line, Column: cnv.start.Column + 1})
 		fmt.Print(strings.Repeat(" ", int(cnv.size.Column)))
 	}
