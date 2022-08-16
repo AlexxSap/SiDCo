@@ -74,37 +74,8 @@ func (cnv Canvas) DrawPath(sym string, points []Point) {
 	}
 }
 
-// DrawSample example for check this
-func (cnv Canvas) DrawSample(isHorizontal bool) {
-
-	cnv.clearInner()
-
-	if isHorizontal {
-		points1, points2 := make([]Point, 0), make([]Point, 0)
-		for i := 1; i <= int(cnv.size.Column); i++ {
-			points1 = append(points1, Point{Line: cnv.start.Line + 1, Column: cnv.start.Column + pos(i)})
-			points2 = append(points2, Point{Line: cnv.start.Line + cnv.size.Line - 1, Column: cnv.start.Column + pos(i)})
-		}
-		cnv.DrawPath("*", points1)
-		cnv.DrawPath("+", points2)
-
-	} else {
-
-		points1, points2 := make([]Point, 0), make([]Point, 0)
-		for i := 1; i < int(cnv.size.Line); i++ {
-			points1 = append(points1, Point{Line: cnv.start.Line + pos(i), Column: cnv.start.Column + 1})
-			points2 = append(points2, Point{Line: cnv.start.Line + pos(i), Column: cnv.start.Column + cnv.size.Column})
-		}
-
-		cnv.DrawPath("^", points1)
-		cnv.DrawPath("#", points2)
-	}
-
-	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
-}
-
-// clearInner clear all in the box
-func (cnv Canvas) clearInner() {
+// ClearInner clear all in the box
+func (cnv Canvas) ClearInner() {
 	var line pos = 1
 	for ; line < cnv.size.Line; line++ {
 		cnv.moveCursorTo(Point{Line: cnv.start.Line + line, Column: cnv.start.Column + 1})
