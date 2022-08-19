@@ -118,12 +118,15 @@ func (cnv Canvas) DrawText(text string, point Point) {
 // DrawColoredText print colored text on specified position
 func (cnv Canvas) DrawColoredText(text string, point Point, color Color) {
 	line, column := point.Line, point.Column
+
+	fmt.Print(color.String())
+	defer fmt.Print(ColorReset.String())
+
 	for ind, sym := range []rune(text) {
 		cnv.moveCursorTo(Point{Line: line, Column: column + ind})
-		fmt.Print(color.String() + string(sym))
+		fmt.Print(string(sym))
 	}
 
-	fmt.Print(ColorReset.String())
 	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
 }
 
