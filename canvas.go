@@ -11,19 +11,9 @@ var (
 	maxLine int = 0
 )
 
-type Color uint8
+type Color int
 
-// constants for comands
 const (
-	hLine             = "\u2500"
-	vLine             = "\u2502"
-	movePattern       = "\033[%v;%vf"
-	topLeftCorner     = "\u250C"
-	topRightCorner    = "\u2510"
-	bottomLeftCorner  = "\u2514"
-	bottomRightCorner = "\u2518"
-	clearAllScreen    = "\u001b[2J"
-
 	ColorReset Color = iota
 	ColorBlack
 	ColorRed
@@ -47,6 +37,18 @@ func (color Color) String() string {
 		"\u001b[36m",
 		"\u001b[37m"}[color]
 }
+
+// constants for comands
+const (
+	hLine             = "\u2500"
+	vLine             = "\u2502"
+	movePattern       = "\033[%v;%vf"
+	topLeftCorner     = "\u250C"
+	topRightCorner    = "\u2510"
+	bottomLeftCorner  = "\u2514"
+	bottomRightCorner = "\u2518"
+	clearAllScreen    = "\u001b[2J"
+)
 
 // saveMaxLine save maximum line number into 'maxLine'
 func saveMaxLine(line int) {
@@ -117,11 +119,11 @@ func (cnv Canvas) DrawText(text string, point Point) {
 func (cnv Canvas) DrawColoredText(text string, point Point, color Color) {
 	line, column := point.Line, point.Column
 	for ind, sym := range []rune(text) {
-		cnv.moveCursorTo(Point{line, column + ind})
-		fmt.Print(string(color) + string(sym))
+		cnv.moveCursorTo(Point{Line: line, Column: column + ind})
+		fmt.Print(color.String() + string(sym))
 	}
 
-	fmt.Print(string(ColorReset))
+	fmt.Print(ColorReset.String())
 	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
 }
 
