@@ -11,6 +11,8 @@ var (
 	maxLine int = 0
 )
 
+type Color uint8
+
 // constants for comands
 const (
 	hLine             = "\u2500"
@@ -21,7 +23,30 @@ const (
 	bottomLeftCorner  = "\u2514"
 	bottomRightCorner = "\u2518"
 	clearAllScreen    = "\u001b[2J"
+
+	ColorReset Color = iota
+	ColorBlack
+	ColorRed
+	ColorGreen
+	ColorYellow
+	ColorBlue
+	ColorMagenta
+	ColorCyan
+	ColorWhite
 )
+
+func (color Color) String() string {
+	return []string{
+		"\u001b[0m",
+		"\u001b[30m",
+		"\u001b[31m",
+		"\u001b[32m",
+		"\u001b[33m",
+		"\u001b[34m",
+		"\u001b[35m",
+		"\u001b[36m",
+		"\u001b[37m"}[color]
+}
 
 // saveMaxLine save maximum line number into 'maxLine'
 func saveMaxLine(line int) {
@@ -85,8 +110,13 @@ func (cnv Canvas) DrawPath(sym string, points []Point) {
 
 // DrawText print text on specified position
 func (cnv Canvas) DrawText(text string, point Point) {
+	cnv.DrawColoredText(text, point, ColorReset)
+}
+
+// DrawColoredText print colored text on specified position
+func (cnv Canvas) DrawColoredText(text string, point Point, color Color) {
 	cnv.moveCursorTo(point)
-	fmt.Print(text)
+	fmt.Print(string(color) + text)
 }
 
 // ClearInner clear all in the box
