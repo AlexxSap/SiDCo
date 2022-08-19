@@ -64,4 +64,5 @@ func main() {
 	}
 }
 ```
+![sample](https://user-images.githubusercontent.com/13485922/184956461-c1317a2f-e220-4116-94bb-9bdebbafda1e.gif)
 
