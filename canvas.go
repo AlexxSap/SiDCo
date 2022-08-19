@@ -83,6 +83,12 @@ func (cnv Canvas) DrawPath(sym string, points []Point) {
 	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
 }
 
+// DrawText print text on specified position
+func (cnv Canvas) DrawText(text string, point Point) {
+	cnv.moveCursorTo(point)
+	fmt.Print(text)
+}
+
 // ClearInner clear all in the box
 func (cnv Canvas) ClearInner() {
 	for line := 1; line < cnv.size.Line; line++ {
