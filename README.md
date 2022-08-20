@@ -1,5 +1,6 @@
 # SiDCo
 SImple Drawing in Console 
+See example below
 
 ### Installation
 Install and update this package with `go get -u github.com/AlexxSap/SiDCo`
@@ -10,6 +11,7 @@ package main
 
 import (
 	"time"
+
 	canvas "github.com/AlexxSap/SiDCo"
 )
 
@@ -23,8 +25,8 @@ func drawSample(cnv *canvas.Canvas, isHorizontal bool) {
 	if isHorizontal {
 		points1, points2 := make([]canvas.Point, 0), make([]canvas.Point, 0)
 		for i := 1; i <= columnSize; i++ {
-			points1 = append(points1, canvas.Point{Line: topLeft.Line + 1, Column: topLeft.Column + i})
-			points2 = append(points2, canvas.Point{Line: bottomRight.Line - 1, Column: topLeft.Column + i})
+			points1 = append(points1, canvas.Point{topLeft.Line + 1, topLeft.Column + i})
+			points2 = append(points2, canvas.Point{bottomRight.Line - 1, topLeft.Column + i})
 		}
 		cnv.DrawPath("*", points1)
 		cnv.DrawPath("+", points2)
@@ -33,8 +35,8 @@ func drawSample(cnv *canvas.Canvas, isHorizontal bool) {
 
 		points1, points2 := make([]canvas.Point, 0), make([]canvas.Point, 0)
 		for i := 1; i < lineSize; i++ {
-			points1 = append(points1, canvas.Point{Line: topLeft.Line + i, Column: topLeft.Column + 1})
-			points2 = append(points2, canvas.Point{Line: topLeft.Line + i, Column: bottomRight.Column})
+			points1 = append(points1, canvas.Point{topLeft.Line + i, topLeft.Column + 1})
+			points2 = append(points2, canvas.Point{topLeft.Line + i, bottomRight.Column})
 		}
 
 		cnv.DrawPath("^", points1)
@@ -44,25 +46,29 @@ func drawSample(cnv *canvas.Canvas, isHorizontal bool) {
 
 func main() {
 
-	cnv1, err := canvas.NewCanvas(canvas.Point{Line: 1, Column: 1}, canvas.Point{Line: 10, Column: 20})
+	cnv1, err := canvas.NewCanvas(canvas.Point{1, 1}, canvas.Point{10, 20})
 	if err != nil {
 		panic(err)
 	}
-	cnv1.DrawBoxWithTitle("Title Square")
+	cnv1.DrawBoxWithTitle("Simple box")
 
-	cnv2, err := canvas.NewCanvas(canvas.Point{Line: 1, Column: 25}, canvas.Point{Line: 5, Column: 30})
+	cnv2, err := canvas.NewCanvas(canvas.Point{1, 25}, canvas.Point{5, 30})
 	if err != nil {
 		panic(err)
 	}
-	cnv2.DrawBoxWithTitle("Title Rectangle")
+	cnv2.DrawColoredBoxWithTitle("Colored box", canvas.ColorRed, canvas.ColorGreen)
 
 	for i := 0; i < 5; i++ {
 		drawSample(&cnv1, i%2 == 0)
 		drawSample(&cnv2, i%2 != 0)
 
+		cnv2.DrawColoredText("constant text", canvas.Point{3, 28}, canvas.ColorYellow)
+
 		time.Sleep(1 * time.Second)
 	}
 }
+
 ```
-![sample](https://user-images.githubusercontent.com/13485922/184956461-c1317a2f-e220-4116-94bb-9bdebbafda1e.gif)
+![sample2](https://user-images.githubusercontent.com/13485922/185736039-7098a5b0-d317-4bf7-9514-eb8ffd876d5e.gif)
+
 
