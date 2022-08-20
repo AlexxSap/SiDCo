@@ -1,6 +1,7 @@
 # SiDCo
-SImple Drawing in Console 
-See example below
+SImple Drawing in Console. Not very much features, but that all what sometimes needed.
+
+See example below.
 
 ### Installation
 Install and update this package with `go get -u github.com/AlexxSap/SiDCo`
