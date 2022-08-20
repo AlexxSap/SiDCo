@@ -146,21 +146,31 @@ func (cnv Canvas) moveCursorTo(point Point) {
 
 // DrawBoxWithTitle draw box around canvas with some title
 func (cnv Canvas) DrawBoxWithTitle(title string) error {
+	return cnv.DrawColoredBoxWithTitle(title, ColorReset, ColorReset)
+}
+
+// DrawColoredBoxWithTitle draw box with spicified color around canvas with some colored title
+func (cnv Canvas) DrawColoredBoxWithTitle(title string, boxColor Color, textColor Color) error {
 
 	titleLen := utf8.RuneCountInString(title)
 	if titleLen > int(cnv.size.Column) {
 		return fmt.Errorf("length of title more then box width")
 	}
 
+	defer fmt.Print(ColorReset.String())
+
 	cnv.moveCursorTo(cnv.start)
 
 	// draw top
-	fmt.Print(
-		topLeftCorner +
-			strings.Repeat(hLine, 2) +
-			title +
-			strings.Repeat(hLine, int(cnv.size.Column)-2-utf8.RuneCountInString(title)) +
-			topRightCorner)
+	fmt.Print(boxColor.String())
+	fmt.Print(topLeftCorner + strings.Repeat(hLine, 2))
+
+	fmt.Print(textColor.String())
+	fmt.Print(title)
+
+	fmt.Print(boxColor.String())
+	fmt.Print(strings.Repeat(hLine, int(cnv.size.Column)-2-utf8.RuneCountInString(title)) +
+		topRightCorner)
 
 	for line := cnv.start.Line + 1; line < cnv.start.Line+cnv.size.Line; line++ {
 		cnv.moveCursorTo(Point{Line: line, Column: cnv.start.Column})
