@@ -90,14 +90,9 @@ func NewCanvas(start, size Point) (Canvas, error) {
 		size:  size}, nil
 }
 
-// TopLeftCorner return top left corner pos
-func (cnv Canvas) TopLeftCorner() Point {
-	return cnv.start
-}
-
-// BottomRightCorner return bottom right corner pos
-func (cnv Canvas) BottomRightCorner() Point {
-	return Point{Line: cnv.start.Line + cnv.size.Line, Column: cnv.start.Column + cnv.size.Column}
+// Size resurn size of box
+func (cnv Canvas) Size() Point {
+	return cnv.size
 }
 
 // DrawPath draw symbol 'sym' in point 'points'
