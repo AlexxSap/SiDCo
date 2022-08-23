@@ -1,4 +1,6 @@
 # SiDCo
+[![Go Report Card](https://goreportcard.com/badge/github.com/AlexxSap/SiDCo)](https://goreportcard.com/report/github.com/AlexxSap/SiDCo)
+
 SImple Drawing in Console. Not very much features, but that all what sometimes needed.
 
 See example below.
