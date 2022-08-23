@@ -128,7 +128,7 @@ func (cnv Canvas) DrawColoredText(text string, point Point, color Color) {
 // ClearInner clear all in the box
 func (cnv Canvas) ClearInner() {
 	for line := 1; line < cnv.size.Line; line++ {
-		cnv.moveCursorTo(Point{Line: cnv.start.Line + line, Column: cnv.start.Column + 1})
+		cnv.moveCursorTo(Point{Line: line, Column: 1})
 		fmt.Print(strings.Repeat(" ", int(cnv.size.Column)))
 	}
 	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
@@ -158,7 +158,7 @@ func (cnv Canvas) DrawColoredBoxWithTitle(title string, boxColor Color, textColo
 
 	defer fmt.Print(ColorReset.String())
 
-	cnv.moveCursorTo(cnv.start)
+	cnv.moveCursorTo(Point{0, 0})
 
 	// draw top
 	fmt.Print(boxColor.String())
@@ -171,21 +171,21 @@ func (cnv Canvas) DrawColoredBoxWithTitle(title string, boxColor Color, textColo
 	fmt.Print(strings.Repeat(hLine, int(cnv.size.Column)-2-utf8.RuneCountInString(title)) +
 		topRightCorner)
 
-	for line := cnv.start.Line + 1; line < cnv.start.Line+cnv.size.Line; line++ {
-		cnv.moveCursorTo(Point{Line: line, Column: cnv.start.Column})
+	for line := 1; line < cnv.size.Line; line++ {
+		cnv.moveCursorTo(Point{Line: line, Column: 0})
 		fmt.Print(vLine)
-		cnv.moveCursorTo(Point{Line: line, Column: cnv.start.Column + cnv.size.Column + 1})
+		cnv.moveCursorTo(Point{Line: line, Column: cnv.size.Column + 1})
 		fmt.Print(vLine)
 	}
 
 	// draw bottom
-	cnv.moveCursorTo(Point{Line: cnv.start.Line + cnv.size.Line, Column: cnv.start.Column})
+	cnv.moveCursorTo(Point{Line: cnv.size.Line, Column: 0})
 	fmt.Print(
 		bottomLeftCorner +
 			strings.Repeat(hLine, int(cnv.size.Column)) +
 			bottomRightCorner)
 
-	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
+	cnv.moveCursorToBottom()
 
 	return nil
 
