@@ -22,14 +22,13 @@ func drawSample(cnv *canvas.Canvas, isHorizontal bool) {
 
 	cnv.ClearInner()
 
-	topLeft, bottomRight := cnv.TopLeftCorner(), cnv.BottomRightCorner()
-	lineSize, columnSize := bottomRight.Line-topLeft.Line, bottomRight.Column-topLeft.Column
+	lineSize, columnSize := cnv.Size().Line, cnv.Size().Column
 
 	if isHorizontal {
 		points1, points2 := make([]canvas.Point, 0), make([]canvas.Point, 0)
 		for i := 1; i <= columnSize; i++ {
-			points1 = append(points1, canvas.Point{topLeft.Line + 1, topLeft.Column + i})
-			points2 = append(points2, canvas.Point{bottomRight.Line - 1, topLeft.Column + i})
+			points1 = append(points1, canvas.Point{1, i})
+			points2 = append(points2, canvas.Point{lineSize - 1, i})
 		}
 		cnv.DrawPath("*", points1)
 		cnv.DrawPath("+", points2)
@@ -38,8 +37,8 @@ func drawSample(cnv *canvas.Canvas, isHorizontal bool) {
 
 		points1, points2 := make([]canvas.Point, 0), make([]canvas.Point, 0)
 		for i := 1; i < lineSize; i++ {
-			points1 = append(points1, canvas.Point{topLeft.Line + i, topLeft.Column + 1})
-			points2 = append(points2, canvas.Point{topLeft.Line + i, bottomRight.Column})
+			points1 = append(points1, canvas.Point{i, 1})
+			points2 = append(points2, canvas.Point{i, columnSize - 1})
 		}
 
 		cnv.DrawPath("^", points1)
@@ -65,11 +64,12 @@ func main() {
 		drawSample(&cnv1, i%2 == 0)
 		drawSample(&cnv2, i%2 != 0)
 
-		cnv2.DrawColoredText("constant text", canvas.Point{3, 28}, canvas.ColorYellow)
+		cnv2.DrawColoredText("constant text", canvas.Point{2, 3}, canvas.ColorYellow)
 
 		time.Sleep(1 * time.Second)
 	}
 }
+
 
 ```
 ![sample2](https://user-images.githubusercontent.com/13485922/185736039-7098a5b0-d317-4bf7-9514-eb8ffd876d5e.gif)
