@@ -141,7 +141,11 @@ func (cnv Canvas) ClearInner() {
 
 // moveCursorTo moved cursor to custom position
 func (cnv Canvas) moveCursorTo(point Point) {
-	fmt.Printf(movePattern, point.Line, point.Column)
+	fmt.Printf(movePattern, cnv.start.Line+point.Line, cnv.start.Column+point.Column)
+}
+
+func (cnv Canvas) moveCursorToBottom() {
+	fmt.Printf(movePattern, maxLine+2, 1)
 }
 
 // DrawBoxWithTitle draw box around canvas with some title
