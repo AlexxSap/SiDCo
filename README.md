@@ -9,7 +9,7 @@ See example below.
 ### Installation
 Install and update this package with `go get -u github.com/AlexxSap/SiDCo`
 
-### Example
+### Example 1
 ```go
 package main
 
@@ -74,5 +74,8 @@ func main() {
 
 ```
 ![sample2](https://user-images.githubusercontent.com/13485922/185736039-7098a5b0-d317-4bf7-9514-eb8ffd876d5e.gif)
+
+### Example 2
+Game snake - https://github.com/AlexxSap/snake
 
 
