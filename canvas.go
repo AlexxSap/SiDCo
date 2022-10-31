@@ -57,13 +57,9 @@ func saveMaxLine(line int) {
 	}
 }
 
-// clearScreen clear all terminal screen
-func clearScreen() {
+// ClearScreen clear all terminal screen. Need invoke this method before draw.
+func ClearScreen() {
 	fmt.Println(clearAllScreen)
-}
-
-func init() {
-	clearScreen()
 }
 
 // Point represents position in console
