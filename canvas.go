@@ -95,6 +95,23 @@ func (cnv Canvas) Size() Point {
 	return cnv.size
 }
 
+// PointProvider interface for provide point and symbol for draw
+type PointProvider interface {
+	Provide() (string, int, int)
+}
+
+// DrawSource draw symbol on position provided by PointProvider
+func (cnv Canvas) DrawSource(pp PointProvider) {
+	sym, line, col := pp.Provide()
+	cnv.moveCursorTo(Point{line, col})
+	fmt.Print(sym)
+}
+
+// EndDraw invoke when the drawing is end and need to put cursor pos to the bottom of screen
+func (cnv Canvas) EndDraw() {
+	cnv.moveCursorTo(Point{Line: maxLine + 1, Column: 1})
+}
+
 // DrawPath draw symbol 'sym' in point 'points'
 func (cnv Canvas) DrawPath(sym string, points []Point) {
 	for _, p := range points {
