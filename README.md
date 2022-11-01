@@ -9,7 +9,7 @@ See example below.
 ### Installation
 Install and update this package with `go get -u github.com/AlexxSap/SiDCo`
 
-### Example 1
+### Example 1 (for v1.0.0)
 ```go
 package main
 
