@@ -48,7 +48,13 @@ const (
 	bottomLeftCorner  = "\u2514"
 	bottomRightCorner = "\u2518"
 	clearAllScreen    = "\u001b[2J"
+	clearPos          = "\u2000"
 )
+
+// PointProvider interface for provide point and symbol for draw
+type PointProvider interface {
+	Provide() (string, int, int)
+}
 
 // saveMaxLine save maximum line number into 'maxLine'
 func saveMaxLine(line int) {
@@ -91,11 +97,6 @@ func (cnv Canvas) Size() Point {
 	return cnv.size
 }
 
-// PointProvider interface for provide point and symbol for draw
-type PointProvider interface {
-	Provide() (string, int, int)
-}
-
 // DrawSource draw symbol on position provided by PointProvider
 func (cnv Canvas) DrawSource(pp PointProvider) {
 	sym, line, col := pp.Provide()
@@ -121,6 +122,16 @@ func (cnv Canvas) DrawPath(sym string, points []Point) {
 // DrawText print text on specified position
 func (cnv Canvas) DrawText(text string, point Point) {
 	cnv.DrawColoredText(text, point, ColorReset)
+}
+
+// SetColor set specified color for text
+func (cnv Canvas) SetColor(c Color) {
+	fmt.Print(c.String())
+}
+
+// SetDefaultColor reset color to default
+func (cnv Canvas) SetDefaultColor() {
+	cnv.SetColor(ColorReset)
 }
 
 // DrawColoredText print colored text on specified position
