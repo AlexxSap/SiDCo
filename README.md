@@ -2,7 +2,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/AlexxSap/SiDCo)](https://goreportcard.com/report/github.com/AlexxSap/SiDCo)
 [![Go Reference](https://pkg.go.dev/badge/github.com/AlexxSap/SiDCo.svg)](https://pkg.go.dev/github.com/AlexxSap/SiDCo)
 
-SImple Drawing in Console. Not very much features, but that all what sometimes needed.
+SImple Drawing in Console. Not very much features, but everything you need sometimes.
 
 See example below.
 
