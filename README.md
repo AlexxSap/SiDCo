@@ -78,4 +78,7 @@ func main() {
 ### Example 2
 Game snake - https://github.com/AlexxSap/snake
 
+### Example 3
+Game tetris - https://github.com/AlexxSap/tetris
+
 
